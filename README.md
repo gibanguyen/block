@@ -1,2 +1,2 @@
 # BLOCK
-This project is built in MERN stack technology.
+This project is built in MERN stack.
