@@ -13,9 +13,10 @@ router.post("/register", async (req, res) => {
       userEmail: req.body.userEmail,
       password: hashedPass,
     });
-
-    const user = await newUser.save();
-    res.status(200).json(user);
+    
+    await newUser.save();
+    const { password, ...other } = newUser._doc;
+    res.status(200).json(other);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -33,7 +34,8 @@ router.post("/login", async (req, res) => {
     const validated = await bcrypt.compare(req.body.password, user.password);
 
     if (validated) {
-      res.status(200).json(user);
+      const { password, ...other } = user._doc;
+      res.status(200).json(other);
     } else res.status(404).json("Invalid email or password");
   } catch (err) {
     res.status(500).json(err);
